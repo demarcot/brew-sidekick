@@ -1,0 +1,78 @@
+<mat-card>
+    <label for="">Pre Brew Calculations:</label>
+    
+    <div>
+        <div>
+            <div>Target Mash Temp (Farenheit):</div>
+            <input type="number" [formControl]="targetMashTemp">
+            <div>Grain Weight (lbs.):</div>
+            <input type="number" [formControl]="grainWeight">
+            <div>Estimated Absorption Rate (gal/lb):</div>
+            <input type="number" step=".1" [formControl]="absRate">
+            <div>Estimated Evaporation Rate (gal/hr):</div>
+            <input type="number" step=".1" [formControl]="evapRate">
+            <div>Estimated Mash Tun Loss:</div>
+            <input type="number" step=".1" [formControl]="mashTunLoss">
+            <div>Target OG:</div>
+            <input type="number" step=".001" [formControl]="targetOg">
+            <div>Target Batch Volume (gal): </div>
+            <input type="number" step=".1" [formControl]="batchVol">
+
+        </div>
+
+        <div>
+
+            <div>Strike Temp (F): {{strikeTemp}}</div>
+            <div>Strike Vol (gal): {{strikeVol}}</div>
+            <div>Absorption Vol (gal): {{grainWeight.value*absRate.value}}</div>
+            <div>First Runnings Vol (gal): {{firstRunningsVol}}</div>
+        </div>
+    </div>
+
+    <div>
+        <div>
+
+        </div>
+
+        <div>
+
+            <div>Sparge Vol (gal): {{spargeVol}}</div>
+            <div>Estimated Preboil Gravity: {{estPreboilGrav}}</div>
+        </div>
+    </div>
+</mat-card>
+
+<mat-card>
+    <label for="">Brew Corrections:</label>
+    <div>
+        <div>Collected Pre Boil Volume (gal): </div>
+        <input type="number" step=".1" [formControl]="collectedPreboilVol">
+        <div>Measured Gravity: </div>
+        <input type="number" step=".001" [formControl]="measuredGrav">
+        <div>Target Gravity: </div>
+        <input type="number" step=".001" [formControl]="targetGrav">
+    </div>
+    
+    <div>
+        <div *ngIf='isLT(measuredGrav.value, targetGrav.value)' >Light DME add (lbs): {{dmeAdd}}</div>
+        <div *ngIf='isGT(measuredGrav.value, targetGrav.value)' >Extra boil time (mins): {{extraBoilMins}}</div>
+    </div>
+</mat-card>
+
+<mat-card>
+    <label for="">Post Brew Calculations:</label>
+    <div>
+        <div>Potential Gravity: </div>
+        <input type="number" step=".001" [formControl]="potentialGrav">
+        <div>Measured OG: </div>
+        <input type="number" step=".001" [formControl]="measuredOG">
+        <div>Measured FG: </div>
+        <input type="number" step=".001" [formControl]="measuredFG">
+
+    </div>
+
+    <div>
+        <div>Efficiency: {{efficiency*100}}%</div>
+        <div>ABV: {{abv*100}}%</div>
+    </div>
+</mat-card>
