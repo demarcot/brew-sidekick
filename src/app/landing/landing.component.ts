@@ -38,15 +38,12 @@ export class LandingComponent implements OnInit {
 
     // Brew Corrections
     // - Raise Pre Boil Grav
-    // - Lower Pre Boil Grav
     public collectedPreboilVol = new FormControl(6);
     public measuredGrav = new FormControl(1.059);
     public targetGrav = new FormControl(1.060);
     // Weight of addition = (Volume of wort * (Target gravity – Measured gravity)) / Extract potential points of addition
     // Light DME Potential Extract: 1.045
     public dmeAdd: number;
-    // Increase (or decrease) in boiling time in minutes = (Pre-boil volume * (Target pre-boil gravity points – Actual pre-boil gravity points) * 60) / (Target pre-boil gravity points * Boiling losses per hour)
-    public extraBoilMins: number;
 
     // Volume Measuring
     // Assuming holding pot and standing on scale
@@ -111,12 +108,12 @@ export class LandingComponent implements OnInit {
         this.preboilVol = 0+this.batchVol.value + 1*this.evapRate.value;
         this.firstRunningsVol = this.strikeVol - (this.absVol + this.mashTunLoss.value);
         this.spargeVol = this.preboilVol - this.firstRunningsVol;
-        let targetSG = (this.targetOg.value-1)*1000;
+        let targetSG = this.convertToPts(this.targetOg.value);
         let preboilSG = (targetSG*this.batchVol.value)/this.preboilVol;
-        this.estPreboilGrav = (preboilSG/1000.0)+1.0;
+        this.estPreboilGrav = this.convertToGrav(preboilSG);
 
-        this.dmeAdd = 5;
-        this.extraBoilMins = 5;
+        // Weight of addition = (Volume of wort * (Target gravity – Measured gravity)) / Extract potential points of addition
+        this.dmeAdd = (this.collectedPreboilVol.value * (this.convertToPts(this.targetGrav.value) - this.convertToPts(this.measuredGrav.value)))/45;
 
         this.currVol = (this.currWeight.value - this.emptyWeight.value)/(8.32 * this.specificGrav.value);
 
@@ -130,5 +127,13 @@ export class LandingComponent implements OnInit {
 
     public isLT(a: any, b: any): boolean {
         return a < b;
+    }
+
+    private convertToPts(grav: number) {
+        return (grav-1.0) * 1000;
+    }
+
+    private convertToGrav(pts: number) {
+        return (pts/1000.0) + 1.0;
     }
 }

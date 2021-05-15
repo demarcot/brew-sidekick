@@ -85,8 +85,8 @@
     </div>
     
     <div>
-        <div *ngIf='isLT(measuredGrav.value, targetGrav.value)' >Light DME add (lbs): {{dmeAdd}}</div>
-        <div *ngIf='isGT(measuredGrav.value, targetGrav.value)' >Extra boil time (mins): {{extraBoilMins}}</div>
+        <div>Light DME add (lbs): {{dmeAdd}}</div>
+        <div>Light DME add (oz): {{dmeAdd*16}}</div>
     </div>
 </mat-card>
 
