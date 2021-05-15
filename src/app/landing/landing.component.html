@@ -1,23 +1,44 @@
 <mat-card>
-    <label for="">Pre Brew Calculations:</label>
+    <mat-toolbar color="primary">
+        <span>Pre Brew Calculations:</span>
+    </mat-toolbar>
     
     <div>
         <div>
-            <div>Target Mash Temp (Farenheit):</div>
-            <input type="number" [formControl]="targetMashTemp">
-            <div>Grain Weight (lbs.):</div>
-            <input type="number" [formControl]="grainWeight">
-            <div>Estimated Absorption Rate (gal/lb):</div>
-            <input type="number" step=".1" [formControl]="absRate">
-            <div>Estimated Evaporation Rate (gal/hr):</div>
-            <input type="number" step=".1" [formControl]="evapRate">
-            <div>Estimated Mash Tun Loss:</div>
-            <input type="number" step=".1" [formControl]="mashTunLoss">
-            <div>Target OG:</div>
-            <input type="number" step=".001" [formControl]="targetOg">
-            <div>Target Batch Volume (gal): </div>
-            <input type="number" step=".1" [formControl]="batchVol">
+            <mat-form-field>
+                <mat-label>Target Mash Temp (Farenheit):</mat-label>
+                <input matInput type="number" [formControl]="targetMashTemp">
+            </mat-form-field>
+            
+            <mat-form-field>
+                <mat-label>Grain Weight (lbs.):</mat-label>
+                <input matInput type="number" [formControl]="grainWeight">
+            </mat-form-field>
 
+            <mat-form-field>
+                <mat-label>Estimated Absorption Rate (gal/lb):</mat-label>
+                <input matInput type="number" step=".1" [formControl]="absRate">
+            </mat-form-field>
+            
+            <mat-form-field>
+                <mat-label>Estimated Evaporation Rate (gal/hr):</mat-label>
+                <input matInput type="number" step=".1" [formControl]="evapRate">
+            </mat-form-field>
+            
+            <mat-form-field>
+                <mat-label>Estimated Mash Tun Loss:</mat-label>
+                <input matInput type="number" step=".1" [formControl]="mashTunLoss">
+            </mat-form-field>
+            
+            <mat-form-field>
+                <mat-label>Target OG:</mat-label>
+                <input matInput type="number" step=".001" [formControl]="targetOg">
+            </mat-form-field>
+            
+            <mat-form-field>
+                <mat-label>Target Batch Volume (gal): </mat-label>
+                <input matInput type="number" step=".1" [formControl]="batchVol">
+            </mat-form-field>
         </div>
 
         <div>
@@ -43,32 +64,80 @@
 </mat-card>
 
 <mat-card>
-    <label for="">Brew Corrections:</label>
+    <mat-toolbar color="primary">
+        <span>Brew Corrections:</span>
+    </mat-toolbar>
+
     <div>
-        <div>Collected Pre Boil Volume (gal): </div>
-        <input type="number" step=".1" [formControl]="collectedPreboilVol">
-        <div>Measured Gravity: </div>
-        <input type="number" step=".001" [formControl]="measuredGrav">
-        <div>Target Gravity: </div>
-        <input type="number" step=".001" [formControl]="targetGrav">
+        <mat-form-field>
+            <mat-label>Collected Pre Boil Volume (gal): </mat-label>
+            <input matInput type="number" step=".1" [formControl]="collectedPreboilVol">
+        </mat-form-field>
+
+        <mat-form-field>
+            <mat-label>Measured Gravity: </mat-label>
+            <input matInput type="number" step=".001" [formControl]="measuredGrav">
+        </mat-form-field>
+        <mat-form-field>
+            <mat-label>Target Gravity: </mat-label>
+            <input matInput type="number" step=".001" [formControl]="targetGrav">
+        </mat-form-field>
     </div>
     
     <div>
-        <div *ngIf='isLT(measuredGrav.value, targetGrav.value)' >Light DME add (lbs): {{dmeAdd}}</div>
-        <div *ngIf='isGT(measuredGrav.value, targetGrav.value)' >Extra boil time (mins): {{extraBoilMins}}</div>
+        <div>Light DME add (lbs): {{dmeAdd}}</div>
+        <div>Light DME add (oz): {{dmeAdd*16}}</div>
     </div>
 </mat-card>
 
 <mat-card>
-    <label for="">Post Brew Calculations:</label>
-    <div>
-        <div>Potential Gravity: </div>
-        <input type="number" step=".001" [formControl]="potentialGrav">
-        <div>Measured OG: </div>
-        <input type="number" step=".001" [formControl]="measuredOG">
-        <div>Measured FG: </div>
-        <input type="number" step=".001" [formControl]="measuredFG">
+    <mat-toolbar color="primary">
+        <span>Volume Measuring</span>
+    </mat-toolbar>
 
+    <div>
+        <mat-form-field>
+            <mat-label>Current Weight (lbs):</mat-label>
+            <input matInput type="number" [formControl]="currWeight">
+        </mat-form-field>
+        
+        <mat-form-field>
+            <mat-label>Empty Weight (lbs):</mat-label>
+            <input matInput type="number" [formControl]="emptyWeight">
+        </mat-form-field>
+        
+        <mat-form-field>
+            <mat-label>Specific Gravity:</mat-label>
+            <input matInput type="number" step=".001" [formControl]="specificGrav">
+        </mat-form-field>
+    </div>
+
+    <div>
+        <div>Current Volume (gal):</div>
+        <div>{{currVol}}</div>
+    </div>
+</mat-card>
+
+<mat-card>
+    <mat-toolbar color="primary">
+        <span>Post Brew Calculations:</span>
+    </mat-toolbar>
+
+    <div>
+        <mat-form-field>
+            <mat-label>Potential Gravity: </mat-label>
+            <input matInput type="number" step=".001" [formControl]="potentialGrav">
+        </mat-form-field>
+        
+        <mat-form-field>
+            <mat-label>Measured OG: </mat-label>
+            <input matInput type="number" step=".001" [formControl]="measuredOG">
+        </mat-form-field>
+
+        <mat-form-field>
+            <mat-label>Measured FG: </mat-label>
+            <input matInput type="number" step=".001" [formControl]="measuredFG">
+        </mat-form-field>
     </div>
 
     <div>
