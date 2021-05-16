@@ -4,40 +4,40 @@
     </mat-toolbar>
     
     <div>
-        <div>
+        <div [formGroup]="fg">
             <mat-form-field>
                 <mat-label>Target Mash Temp (Farenheit):</mat-label>
-                <input matInput type="number" [formControl]="targetMashTemp">
+                <input matInput type="number" formControlName="targetMashTemp" [value]="targetMashTemp">
             </mat-form-field>
             
             <mat-form-field>
                 <mat-label>Grain Weight (lbs.):</mat-label>
-                <input matInput type="number" [formControl]="grainWeight">
+                <input matInput type="number" formControleNam="grainWeight" [value]="grainWeight">
             </mat-form-field>
 
             <mat-form-field>
                 <mat-label>Estimated Absorption Rate (gal/lb):</mat-label>
-                <input matInput type="number" step=".1" [formControl]="absRate">
+                <input matInput type="number" step=".1" formControleNam="absRate" [value]="absRate">
             </mat-form-field>
             
             <mat-form-field>
                 <mat-label>Estimated Evaporation Rate (gal/hr):</mat-label>
-                <input matInput type="number" step=".1" [formControl]="evapRate">
+                <input matInput type="number" step=".1" formControleNam="evapRate" [value]="evapRate">
             </mat-form-field>
             
             <mat-form-field>
                 <mat-label>Estimated Mash Tun Loss:</mat-label>
-                <input matInput type="number" step=".1" [formControl]="mashTunLoss">
+                <input matInput type="number" step=".1" formControleNam="mashTunLoss" [value]="mashTunLoss">
             </mat-form-field>
             
             <mat-form-field>
                 <mat-label>Target OG:</mat-label>
-                <input matInput type="number" step=".001" [formControl]="targetOg">
+                <input matInput type="number" step=".001" formControleNam="targetOg" [value]="targetOg">
             </mat-form-field>
             
             <mat-form-field>
                 <mat-label>Target Batch Volume (gal): </mat-label>
-                <input matInput type="number" step=".1" [formControl]="batchVol">
+                <input matInput type="number" step=".1" formControleNam="batchVol" [value]="batchVol">
             </mat-form-field>
         </div>
 
@@ -45,7 +45,7 @@
 
             <div>Strike Temp (F): {{strikeTemp}}</div>
             <div>Strike Vol (gal): {{strikeVol}}</div>
-            <div>Absorption Vol (gal): {{grainWeight.value*absRate.value}}</div>
+            <div>Absorption Vol (gal): {{grainWeight*absRate}}</div>
             <div>First Runnings Vol (gal): {{firstRunningsVol}}</div>
         </div>
     </div>
@@ -71,16 +71,16 @@
     <div>
         <mat-form-field>
             <mat-label>Collected Pre Boil Volume (gal): </mat-label>
-            <input matInput type="number" step=".1" [formControl]="collectedPreboilVol">
+            <input matInput type="number" step=".1" formControleNam="collectedPreboilVol" [value]="collectedPreboilVol">
         </mat-form-field>
 
         <mat-form-field>
             <mat-label>Measured Gravity: </mat-label>
-            <input matInput type="number" step=".001" [formControl]="measuredGrav">
+            <input matInput type="number" step=".001" formControleNam="measuredGrav" [value]="measuredGrav">
         </mat-form-field>
         <mat-form-field>
             <mat-label>Target Gravity: </mat-label>
-            <input matInput type="number" step=".001" [formControl]="targetGrav">
+            <input matInput type="number" step=".001" formControleNam="targetGrav" [value]="targetGrav">
         </mat-form-field>
     </div>
     
@@ -98,17 +98,17 @@
     <div>
         <mat-form-field>
             <mat-label>Current Weight (lbs):</mat-label>
-            <input matInput type="number" [formControl]="currWeight">
+            <input matInput type="number" formControleNam="currWeight" [value]="currWeight">
         </mat-form-field>
         
         <mat-form-field>
             <mat-label>Empty Weight (lbs):</mat-label>
-            <input matInput type="number" [formControl]="emptyWeight">
+            <input matInput type="number" formControleNam="emptyWeight" [value]="emptyWeight">
         </mat-form-field>
         
         <mat-form-field>
             <mat-label>Specific Gravity:</mat-label>
-            <input matInput type="number" step=".001" [formControl]="specificGrav">
+            <input matInput type="number" step=".001" formControleNam="specificGrav" [value]="specificGrav">
         </mat-form-field>
     </div>
 
@@ -126,17 +126,17 @@
     <div>
         <mat-form-field>
             <mat-label>Potential Gravity: </mat-label>
-            <input matInput type="number" step=".001" [formControl]="potentialGrav">
+            <input matInput type="number" step=".001" formControleNam="potentialGrav" [value]="potentialGrav">
         </mat-form-field>
         
         <mat-form-field>
             <mat-label>Measured OG: </mat-label>
-            <input matInput type="number" step=".001" [formControl]="measuredOG">
+            <input matInput type="number" step=".001" formControleNam="measuredOG" [value]="measuredOG">
         </mat-form-field>
 
         <mat-form-field>
             <mat-label>Measured FG: </mat-label>
-            <input matInput type="number" step=".001" [formControl]="measuredFG">
+            <input matInput type="number" step=".001" formControleNam="measuredFG" [value]="measuredFG">
         </mat-form-field>
     </div>
 

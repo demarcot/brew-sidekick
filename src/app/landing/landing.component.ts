@@ -17,14 +17,13 @@ export class LandingComponent implements OnInit {
     // - Sparge Vol
     // - Est Pre Boil Grav
     // - Pre Boil Vol
-    public targetMashTemp = new FormControl(152);
-    public grainWeight = new FormControl(10);
-    public absRate = new FormControl(0.125);
-    public evapRate = new FormControl(0.5);
-    public mashTunLoss = new FormControl(.21);
-    public targetOg = new FormControl(1.060);
-    public batchVol = new FormControl(5);
-
+    public targetMashTemp = 152.0;
+    public grainWeight = 10.0;
+    public absRate = 0.125;
+    public evapRate = 0.5;
+    public mashTunLoss = 0.21;
+    public targetOg = 1.060;
+    public batchVol = 5.0;
     
     public mashThickness: number; // .3125gal/lb
     public grainTemp: number;
@@ -35,89 +34,91 @@ export class LandingComponent implements OnInit {
     public firstRunningsVol: number; // strikeVol - (absVol + mashTunLoss)
     public spargeVol: number; // preboilVol - firstRunningsVol
     public estPreboilGrav: number; // (targetOg*targetVol)/preboilVol
-
+    
     // Brew Corrections
     // - Raise Pre Boil Grav
-    public collectedPreboilVol = new FormControl(6);
-    public measuredGrav = new FormControl(1.059);
-    public targetGrav = new FormControl(1.060);
+    public collectedPreboilVol = 6.0;
+    public measuredGrav = 1.045;
+    public targetGrav = 1.065;
     // Weight of addition = (Volume of wort * (Target gravity – Measured gravity)) / Extract potential points of addition
     // Light DME Potential Extract: 1.045
     public dmeAdd: number;
-
+    
     // Volume Measuring
     // Assuming holding pot and standing on scale
     // 8.32lbs/gal = 1kg/L
     // vol = (currWeight-emptyWeight)/(8.32*specificGrav)
-    public currWeight = new FormControl();
-    public emptyWeight = new FormControl();
-    public specificGrav = new FormControl();
+    public currWeight = 12.0;
+    public emptyWeight = 3.0;
+    public specificGrav = 1.061;
     public currVol: number;
-
+    
     // Post Brew Calculations
     // - Efficiency
     // - ABV
-    public potentialGrav = new FormControl(1.084);
-    public measuredOG = new FormControl(1.059);
-    public measuredFG = new FormControl(1.060);
+    public potentialGrav = 1.084;
+    public measuredOG = 1.059;
+    public measuredFG = 1.060;
     public efficiency: number;
     public abv: number;
 
-
-
-    public fg: FormGroup = new FormGroup({
-        targetOg: this.targetOg,
-        batchVol: this.batchVol,
-        targetMashTemp: this.targetMashTemp,
-        grainWeight: this.grainWeight,
-        absRate: this.absRate,
-        mashTunLoss: this.mashTunLoss,
-        evapRate: this.evapRate,
-
-        collectedPreboilVol: this.collectedPreboilVol,
-        measuredGrav: this.measuredGrav,
-        targetGrav: this.targetGrav,
-
-        currWeight: this.currWeight,
-        emptyWeight: this.emptyWeight,
-        specificGrav: this.specificGrav,
-
-        potentialGrav: this.potentialGrav,
-        measuredOG: this.measuredOG,
-        measuredFG: this.measuredFG
-    });
+    
+    
+    public fg: FormGroup;
 
     constructor(){
     }
 
     
     ngOnInit(): void {
-        this.fg.valueChanges.subscribe(val => {
-            this.updateCalculations();
+        this.fg = new FormGroup({
+            targetOg: new FormControl(this.targetOg),
+            batchVol: new FormControl(this.batchVol),
+            targetMashTemp: new FormControl(this.targetMashTemp),
+            grainWeight: new FormControl(this.grainWeight),
+            absRate: new FormControl(this.absRate),
+            mashTunLoss: new FormControl(this.mashTunLoss),
+            evapRate: new FormControl(this.evapRate),
+    
+            collectedPreboilVol: new FormControl(this.collectedPreboilVol),
+            measuredGrav: new FormControl(this.measuredGrav),
+            targetGrav: new FormControl(this.targetGrav),
+            
+            currWeight: new FormControl(this.currWeight),
+            emptyWeight: new FormControl(this.emptyWeight),
+            specificGrav: new FormControl(this.specificGrav),
+    
+            potentialGrav: new FormControl(this.potentialGrav),
+            measuredOG: new FormControl(this.measuredOG),
+            measuredFG: new FormControl(this.measuredFG)
         });
 
-        this.updateCalculations();
+        this.fg.valueChanges.subscribe(val => {
+            this.onChanges();
+        });
+
+        this.onChanges();
     }
 
-    public updateCalculations(): void {
+    public onChanges(): void {
         this.mashThickness = .3125;
         this.grainTemp = 68;
-        this.strikeTemp = (.2/(4*this.mashThickness)) * (this.targetMashTemp.value - this.grainTemp) + this.targetMashTemp.value;
-        this.strikeVol = this.grainWeight.value * this.mashThickness;
-        this.absVol = this.grainWeight.value * this.absRate.value;
-        this.preboilVol = 0+this.batchVol.value + 1*this.evapRate.value;
-        this.firstRunningsVol = this.strikeVol - (this.absVol + this.mashTunLoss.value);
+        this.strikeTemp = (.2/(4*this.mashThickness)) * (this.targetMashTemp - this.grainTemp) + this.targetMashTemp;
+        this.strikeVol = this.grainWeight * this.mashThickness;
+        this.absVol = this.grainWeight * this.absRate;
+        this.preboilVol = 0+this.batchVol + 1*this.evapRate;
+        this.firstRunningsVol = this.strikeVol - (this.absVol + this.mashTunLoss);
         this.spargeVol = this.preboilVol - this.firstRunningsVol;
-        let targetSG = this.convertToPts(this.targetOg.value);
-        let preboilSG = (targetSG*this.batchVol.value)/this.preboilVol;
+        let targetSG = this.convertToPts(this.targetOg);
+        let preboilSG = (targetSG*this.batchVol)/this.preboilVol;
         this.estPreboilGrav = this.convertToGrav(preboilSG);
 
         // Weight of addition = (Volume of wort * (Target gravity – Measured gravity)) / Extract potential points of addition
-        this.dmeAdd = (this.collectedPreboilVol.value * (this.convertToPts(this.targetGrav.value) - this.convertToPts(this.measuredGrav.value)))/45;
+        this.dmeAdd = (this.collectedPreboilVol * (this.convertToPts(this.targetGrav) - this.convertToPts(this.measuredGrav)))/45;
 
-        this.currVol = (this.currWeight.value - this.emptyWeight.value)/(8.32 * this.specificGrav.value);
+        this.currVol = (this.currWeight - this.emptyWeight)/(8.32 * this.specificGrav);
 
-        this.efficiency = (1.0-this.measuredOG.value)/(1.0-this.potentialGrav.value);
+        this.efficiency = (1.0-this.measuredOG)/(1.0-this.potentialGrav);
         this.abv = 0.1;
     }
 
