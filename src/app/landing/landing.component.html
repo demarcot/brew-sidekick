@@ -1,147 +1,153 @@
-<mat-card>
+<div [formGroup]="mainGroup">
+
     <mat-toolbar color="primary">
         <span>Pre Brew Calculations:</span>
     </mat-toolbar>
-    
-    <div>
-        <div [formGroup]="fg">
-            <mat-form-field>
-                <mat-label>Target Mash Temp (Farenheit):</mat-label>
-                <input matInput type="number" formControlName="targetMashTemp" [value]="targetMashTemp">
-            </mat-form-field>
-            
-            <mat-form-field>
-                <mat-label>Grain Weight (lbs.):</mat-label>
-                <input matInput type="number" formControleNam="grainWeight" [value]="grainWeight">
-            </mat-form-field>
 
-            <mat-form-field>
-                <mat-label>Estimated Absorption Rate (gal/lb):</mat-label>
-                <input matInput type="number" step=".1" formControleNam="absRate" [value]="absRate">
-            </mat-form-field>
-            
-            <mat-form-field>
-                <mat-label>Estimated Evaporation Rate (gal/hr):</mat-label>
-                <input matInput type="number" step=".1" formControleNam="evapRate" [value]="evapRate">
-            </mat-form-field>
-            
-            <mat-form-field>
-                <mat-label>Estimated Mash Tun Loss:</mat-label>
-                <input matInput type="number" step=".1" formControleNam="mashTunLoss" [value]="mashTunLoss">
-            </mat-form-field>
-            
-            <mat-form-field>
-                <mat-label>Target OG:</mat-label>
-                <input matInput type="number" step=".001" formControleNam="targetOg" [value]="targetOg">
-            </mat-form-field>
-            
-            <mat-form-field>
-                <mat-label>Target Batch Volume (gal): </mat-label>
-                <input matInput type="number" step=".1" formControleNam="batchVol" [value]="batchVol">
-            </mat-form-field>
-        </div>
+    <button (click)="openDialog()">Open Dialog</button>
 
+    <mat-card>
+        
         <div>
-
-            <div>Strike Temp (F): {{strikeTemp}}</div>
-            <div>Strike Vol (gal): {{strikeVol}}</div>
-            <div>Absorption Vol (gal): {{grainWeight*absRate}}</div>
-            <div>First Runnings Vol (gal): {{firstRunningsVol}}</div>
+            <div formGroupName="preBrewCalcsFG">
+                <mat-form-field>
+                    <mat-label>Target Mash Temp (Farenheit):</mat-label>
+                    <input matInput type="number" formControlName="targetMashTemp" [(ngModel)]="targetMashTemp">
+                </mat-form-field>
+                
+                <mat-form-field>
+                    <mat-label>Grain Weight (lbs.):</mat-label>
+                    <input matInput type="number" formControlName="grainWeight" [(ngModel)]="grainWeight">
+                </mat-form-field>
+                
+                <mat-form-field>
+                    <mat-label>Estimated Absorption Rate (gal/lb):</mat-label>
+                    <input matInput type="number" step=".1" formControlName="absRate" [(ngModel)]="absRate">
+                </mat-form-field>
+                
+                <mat-form-field>
+                    <mat-label>Estimated Evaporation Rate (gal/hr):</mat-label>
+                    <input matInput type="number" step=".1" formControlName="evapRate" [(ngModel)]="evapRate">
+                </mat-form-field>
+                
+                <mat-form-field>
+                    <mat-label>Estimated Mash Tun Loss:</mat-label>
+                    <input matInput type="number" step=".1" formControlName="mashTunLoss" [(ngModel)]="mashTunLoss">
+                </mat-form-field>
+                
+                <mat-form-field>
+                    <mat-label>Target OG:</mat-label>
+                    <input matInput type="number" step=".001" formControlName="targetOg" [(ngModel)]="targetOg">
+                </mat-form-field>
+                
+                <mat-form-field>
+                    <mat-label>Target Batch Volume (gal): </mat-label>
+                    <input matInput type="number" step=".1" formControlName="batchVol" [(ngModel)]="batchVol">
+                </mat-form-field>
+            </div>
+            
+            <div>
+                
+                <div>Strike Temp (F): {{strikeTemp}}</div>
+                <div>Strike Vol (gal): {{strikeVol}}</div>
+                <div>Absorption Vol (gal): {{grainWeight*absRate}}</div>
+                <div>First Runnings Vol (gal): {{firstRunningsVol}}</div>
+            </div>
         </div>
-    </div>
-
-    <div>
+        
         <div>
-
+            <div>
+                
+            </div>
+            
+            <div>
+                
+                <div>Sparge Vol (gal): {{spargeVol}}</div>
+                <div>Estimated Preboil Gravity: {{estPreboilGrav}}</div>
+            </div>
         </div>
+    </mat-card>
 
-        <div>
-
-            <div>Sparge Vol (gal): {{spargeVol}}</div>
-            <div>Estimated Preboil Gravity: {{estPreboilGrav}}</div>
-        </div>
-    </div>
-</mat-card>
-
-<mat-card>
     <mat-toolbar color="primary">
         <span>Brew Corrections:</span>
     </mat-toolbar>
+    <mat-card>
+        
+        <div formGroupName="brewCorrectionsFG">
+            <mat-form-field>
+                <mat-label>Collected Pre Boil Volume (gal): </mat-label>
+                <input matInput type="number" step=".1" formControlName="collectedPreboilVol" [(ngModel)]="collectedPreboilVol">
+            </mat-form-field>
+            
+            <mat-form-field>
+                <mat-label>Measured Gravity: </mat-label>
+                <input matInput type="number" step=".001" formControlName="measuredGrav" [(ngModel)]="measuredGrav">
+            </mat-form-field>
+            <mat-form-field>
+                <mat-label>Target Gravity: </mat-label>
+                <input matInput type="number" step=".001" formControlName="targetGrav" [(ngModel)]="targetGrav">
+            </mat-form-field>
+        </div>
+        
+        <div>
+            <div>Light DME add (lbs): {{dmeAdd}}</div>
+            <div>Light DME add (oz): {{dmeAdd*16}}</div>
+        </div>
+    </mat-card>
 
-    <div>
-        <mat-form-field>
-            <mat-label>Collected Pre Boil Volume (gal): </mat-label>
-            <input matInput type="number" step=".1" formControleNam="collectedPreboilVol" [value]="collectedPreboilVol">
-        </mat-form-field>
-
-        <mat-form-field>
-            <mat-label>Measured Gravity: </mat-label>
-            <input matInput type="number" step=".001" formControleNam="measuredGrav" [value]="measuredGrav">
-        </mat-form-field>
-        <mat-form-field>
-            <mat-label>Target Gravity: </mat-label>
-            <input matInput type="number" step=".001" formControleNam="targetGrav" [value]="targetGrav">
-        </mat-form-field>
-    </div>
-    
-    <div>
-        <div>Light DME add (lbs): {{dmeAdd}}</div>
-        <div>Light DME add (oz): {{dmeAdd*16}}</div>
-    </div>
-</mat-card>
-
-<mat-card>
     <mat-toolbar color="primary">
         <span>Volume Measuring</span>
     </mat-toolbar>
-
-    <div>
-        <mat-form-field>
-            <mat-label>Current Weight (lbs):</mat-label>
-            <input matInput type="number" formControleNam="currWeight" [value]="currWeight">
-        </mat-form-field>
+    <mat-card>
         
-        <mat-form-field>
-            <mat-label>Empty Weight (lbs):</mat-label>
-            <input matInput type="number" formControleNam="emptyWeight" [value]="emptyWeight">
-        </mat-form-field>
+        <div formGroupName="volMeasuringFG">
+            <mat-form-field>
+                <mat-label>Current Weight (lbs):</mat-label>
+                <input matInput type="number" formControlName="currWeight" [(ngModel)]="currWeight">
+            </mat-form-field>
+            
+            <mat-form-field>
+                <mat-label>Empty Weight (lbs):</mat-label>
+                <input matInput type="number" formControlName="emptyWeight" [(ngModel)]="emptyWeight">
+            </mat-form-field>
+            
+            <mat-form-field>
+                <mat-label>Specific Gravity:</mat-label>
+                <input matInput type="number" step=".001" formControlName="specificGrav" [(ngModel)]="specificGrav">
+            </mat-form-field>
+        </div>
         
-        <mat-form-field>
-            <mat-label>Specific Gravity:</mat-label>
-            <input matInput type="number" step=".001" formControleNam="specificGrav" [value]="specificGrav">
-        </mat-form-field>
-    </div>
+        <div>
+            <div>Current Volume (gal):</div>
+            <div>{{currVol}}</div>
+        </div>
+    </mat-card>
 
-    <div>
-        <div>Current Volume (gal):</div>
-        <div>{{currVol}}</div>
-    </div>
-</mat-card>
-
-<mat-card>
     <mat-toolbar color="primary">
         <span>Post Brew Calculations:</span>
     </mat-toolbar>
-
-    <div>
-        <mat-form-field>
-            <mat-label>Potential Gravity: </mat-label>
-            <input matInput type="number" step=".001" formControleNam="potentialGrav" [value]="potentialGrav">
-        </mat-form-field>
+    <mat-card>
         
-        <mat-form-field>
-            <mat-label>Measured OG: </mat-label>
-            <input matInput type="number" step=".001" formControleNam="measuredOG" [value]="measuredOG">
-        </mat-form-field>
-
-        <mat-form-field>
-            <mat-label>Measured FG: </mat-label>
-            <input matInput type="number" step=".001" formControleNam="measuredFG" [value]="measuredFG">
-        </mat-form-field>
-    </div>
-
-    <div>
-        <div>Efficiency: {{efficiency*100}}%</div>
-        <div>ABV: {{abv*100}}%</div>
-    </div>
-</mat-card>
+        <div formGroupName="postBrewFG">
+            <mat-form-field>
+                <mat-label>Potential Gravity: </mat-label>
+                <input matInput type="number" step=".001" formControlName="potentialGrav" [(ngModel)]="potentialGrav">
+            </mat-form-field>
+            
+            <mat-form-field>
+                <mat-label>Measured OG: </mat-label>
+                <input matInput type="number" step=".001" formControlName="measuredOG" [(ngModel)]="measuredOG">
+            </mat-form-field>
+            
+            <mat-form-field>
+                <mat-label>Measured FG: </mat-label>
+                <input matInput type="number" step=".001" formControlName="measuredFG" [(ngModel)]="measuredFG">
+            </mat-form-field>
+        </div>
+        
+        <div>
+            <div>Efficiency: {{efficiency*100}}%</div>
+            <div>ABV: {{abv}}%</div>
+        </div>
+    </mat-card>
+</div>

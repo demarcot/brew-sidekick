@@ -1,6 +1,7 @@
 import { Component, OnInit } from "@angular/core";
 import { Form, FormControl, FormGroup } from '@angular/forms';
-
+import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
+import { CourseDialogComponent } from './landing-dialog.component';
 
 @Component({
     selector: "app-landing",
@@ -63,44 +64,62 @@ export class LandingComponent implements OnInit {
     public abv: number;
 
     
-    
-    public fg: FormGroup;
+    public mainGroup: FormGroup;
 
-    constructor(){
+
+    constructor(private dialog: MatDialog){
     }
-
     
     ngOnInit(): void {
-        this.fg = new FormGroup({
-            targetOg: new FormControl(this.targetOg),
-            batchVol: new FormControl(this.batchVol),
-            targetMashTemp: new FormControl(this.targetMashTemp),
-            grainWeight: new FormControl(this.grainWeight),
-            absRate: new FormControl(this.absRate),
-            mashTunLoss: new FormControl(this.mashTunLoss),
-            evapRate: new FormControl(this.evapRate),
-    
-            collectedPreboilVol: new FormControl(this.collectedPreboilVol),
-            measuredGrav: new FormControl(this.measuredGrav),
-            targetGrav: new FormControl(this.targetGrav),
-            
-            currWeight: new FormControl(this.currWeight),
-            emptyWeight: new FormControl(this.emptyWeight),
-            specificGrav: new FormControl(this.specificGrav),
-    
-            potentialGrav: new FormControl(this.potentialGrav),
-            measuredOG: new FormControl(this.measuredOG),
-            measuredFG: new FormControl(this.measuredFG)
+        this.mainGroup = new FormGroup({
+            preBrewCalcsFG: new FormGroup({
+                targetOg: new FormControl(this.targetOg),
+                batchVol: new FormControl(this.batchVol),
+                targetMashTemp: new FormControl(this.targetMashTemp),
+                grainWeight: new FormControl(this.grainWeight),
+                absRate: new FormControl(this.absRate),
+                mashTunLoss: new FormControl(this.mashTunLoss),
+                evapRate: new FormControl(this.evapRate),
+            }),
+            brewCorrectionsFG: new FormGroup({
+                collectedPreboilVol: new FormControl(this.collectedPreboilVol),
+                measuredGrav: new FormControl(this.measuredGrav),
+                targetGrav: new FormControl(this.targetGrav),
+            }),
+            volMeasuringFG: new FormGroup({
+                currWeight: new FormControl(this.currWeight),
+                emptyWeight: new FormControl(this.emptyWeight),
+                specificGrav: new FormControl(this.specificGrav),
+            }),
+            postBrewFG: new FormGroup({
+                potentialGrav: new FormControl(this.potentialGrav),
+                measuredOG: new FormControl(this.measuredOG),
+                measuredFG: new FormControl(this.measuredFG)
+            })
         });
 
-        this.fg.valueChanges.subscribe(val => {
+        this.mainGroup.valueChanges.subscribe(val => {
             this.onChanges();
         });
 
         this.onChanges();
     }
 
-    public onChanges(): void {
+    openDialog() {
+        const dialogConfig = new MatDialogConfig();
+    
+        dialogConfig.disableClose = true;
+        dialogConfig.autoFocus = true;
+    
+        dialogConfig.data = {
+            id: 1,
+            title: 'Angular For Beginners'
+        };
+    
+        this.dialog.open(CourseDialogComponent, dialogConfig);
+    }
+
+    public onChanges = (): void => {
         this.mashThickness = .3125;
         this.grainTemp = 68;
         this.strikeTemp = (.2/(4*this.mashThickness)) * (this.targetMashTemp - this.grainTemp) + this.targetMashTemp;
@@ -119,8 +138,9 @@ export class LandingComponent implements OnInit {
         this.currVol = (this.currWeight - this.emptyWeight)/(8.32 * this.specificGrav);
 
         this.efficiency = (1.0-this.measuredOG)/(1.0-this.potentialGrav);
-        this.abv = 0.1;
-    }
+        this.abv = (this.measuredOG-this.measuredFG) * 131.25;
+
+    };
 
     public isGT(a: any, b: any): boolean {
         return a > b;
