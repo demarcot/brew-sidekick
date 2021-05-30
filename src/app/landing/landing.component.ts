@@ -1,7 +1,6 @@
 import { Component, OnInit } from "@angular/core";
 import { Form, FormControl, FormGroup } from '@angular/forms';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
-import { CourseDialogComponent } from './landing-dialog.component';
 
 @Component({
     selector: "app-landing",
@@ -97,6 +96,8 @@ export class LandingComponent implements OnInit {
                 measuredFG: new FormControl(this.measuredFG)
             })
         });
+        this.mashThickness = .3125;
+        this.grainTemp = 68;
 
         this.mainGroup.valueChanges.subscribe(val => {
             this.onChanges();
@@ -105,23 +106,26 @@ export class LandingComponent implements OnInit {
         this.onChanges();
     }
 
-    openDialog() {
-        const dialogConfig = new MatDialogConfig();
-    
-        dialogConfig.disableClose = true;
-        dialogConfig.autoFocus = true;
-    
-        dialogConfig.data = {
-            id: 1,
-            title: 'Angular For Beginners'
-        };
-    
-        this.dialog.open(CourseDialogComponent, dialogConfig);
-    }
-
     public onChanges = (): void => {
-        this.mashThickness = .3125;
-        this.grainTemp = 68;
+
+        let vals = this.mainGroup.getRawValue();
+        this.targetMashTemp = vals.preBrewCalcsFG.targetMashTemp;
+        this.grainWeight = vals.preBrewCalcsFG.grainWeight;
+        this.batchVol = vals.preBrewCalcsFG.batchVol;
+        this.evapRate = vals.preBrewCalcsFG.evapRate;
+        this.absRate = vals.preBrewCalcsFG.absRate;
+        this.mashTunLoss = vals.preBrewCalcsFG.mashTunLoss;
+        this.targetOg = vals.preBrewCalcsFG.targetOg;
+        this.collectedPreboilVol = vals.brewCorrectionsFG.collectedPreboilVol;
+        this.targetGrav = vals.brewCorrectionsFG.targetGrav;
+        this.measuredGrav = vals.brewCorrectionsFG.measuredGrav;
+        this.currWeight = vals.volMeasuringFG.currWeight;
+        this.emptyWeight = vals.volMeasuringFG.emptyWeight;
+        this.specificGrav = vals.volMeasuringFG.specificGrav;
+        this.measuredOG = vals.postBrewFG.measuredOG;
+        this.measuredFG = vals.postBrewFG.measuredFG;
+        this.potentialGrav = vals.postBrewFG.potentialGrav;
+
         this.strikeTemp = (.2/(4*this.mashThickness)) * (this.targetMashTemp - this.grainTemp) + this.targetMashTemp;
         this.strikeVol = this.grainWeight * this.mashThickness;
         this.absVol = this.grainWeight * this.absRate;

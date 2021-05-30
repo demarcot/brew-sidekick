@@ -13,13 +13,11 @@ import { AppComponent } from './app.component';
 import { LandingComponent } from './landing/landing.component';
 import { AppRoutingModule } from './app-routing.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { CourseDialogComponent } from './landing/landing-dialog.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     LandingComponent,
-    CourseDialogComponent
   ],
   imports: [
     BrowserModule,
