@@ -1,0 +1,27 @@
+<mat-toolbar color="primary">
+    <span>Post Brew Calculations:</span>
+</mat-toolbar>
+<mat-card>
+    
+    <div [formGroup]="postBrewFG">
+        <mat-form-field>
+            <mat-label>Potential Gravity: </mat-label>
+            <input matInput type="number" step=".001" formControlName="potentialGrav">
+        </mat-form-field>
+        
+        <mat-form-field>
+            <mat-label>Measured OG: </mat-label>
+            <input matInput type="number" step=".001" formControlName="measuredOG">
+        </mat-form-field>
+        
+        <mat-form-field>
+            <mat-label>Measured FG: </mat-label>
+            <input matInput type="number" step=".001" formControlName="measuredFG">
+        </mat-form-field>
+    </div>
+    
+    <div>
+        <div>Efficiency: {{efficiency*100}}%</div>
+        <div>ABV: {{abv}}%</div>
+    </div>
+</mat-card>

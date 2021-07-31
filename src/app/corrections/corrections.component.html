@@ -1,0 +1,26 @@
+<mat-toolbar color="primary">
+    <span>Brew Corrections:</span>
+</mat-toolbar>
+<mat-card>
+    
+    <div [formGroup]="correctionsFG">
+        <mat-form-field>
+            <mat-label>Collected Pre Boil Volume (gal): </mat-label>
+            <input matInput type="number" step=".1" formControlName="collectedPreboilVol">
+        </mat-form-field>
+        
+        <mat-form-field>
+            <mat-label>Measured Gravity: </mat-label>
+            <input matInput type="number" step=".001" formControlName="measuredGrav">
+        </mat-form-field>
+        <mat-form-field>
+            <mat-label>Target Gravity: </mat-label>
+            <input matInput type="number" step=".001" formControlName="targetGrav">
+        </mat-form-field>
+    </div>
+    
+    <div>
+        <div>Light DME add (lbs): {{dmeAdd}}</div>
+        <div>Light DME add (oz): {{dmeAdd*16}}</div>
+    </div>
+</mat-card>

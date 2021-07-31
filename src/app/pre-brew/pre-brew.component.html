@@ -1,0 +1,65 @@
+<mat-toolbar color="primary">
+    <span>Pre Brew Calculations:</span>
+</mat-toolbar>
+
+<mat-card>
+    
+    <div>
+        <div [formGroup]="preBrewCalcsFG">
+            <mat-form-field>
+                <mat-label>Target Mash Temp (Farenheit):</mat-label>
+                <input matInput type="number" formControlName="targetMashTemp">
+            </mat-form-field>
+            
+            <mat-form-field>
+                <mat-label>Grain Weight (lbs.):</mat-label>
+                <input matInput type="number" formControlName="grainWeight">
+            </mat-form-field>
+            
+            <mat-form-field>
+                <mat-label>Estimated Absorption Rate (gal/lb):</mat-label>
+                <input matInput type="number" step=".1" formControlName="absRate">
+            </mat-form-field>
+            
+            <mat-form-field>
+                <mat-label>Estimated Evaporation Rate (gal/hr):</mat-label>
+                <input matInput type="number" step=".1" formControlName="evapRate">
+            </mat-form-field>
+            
+            <mat-form-field>
+                <mat-label>Estimated Mash Tun Loss:</mat-label>
+                <input matInput type="number" step=".1" formControlName="mashTunLoss">
+            </mat-form-field>
+            
+            <mat-form-field>
+                <mat-label>Target OG:</mat-label>
+                <input matInput type="number" step=".001" formControlName="targetOg">
+            </mat-form-field>
+            
+            <mat-form-field>
+                <mat-label>Target Batch Volume (gal): </mat-label>
+                <input matInput type="number" step=".1" formControlName="batchVol">
+            </mat-form-field>
+        </div>
+        
+        <div>
+            
+            <div>Strike Temp (F): {{strikeTemp}}</div>
+            <div>Strike Vol (gal): {{strikeVol}}</div>
+            <div>Absorption Vol (gal): {{grainWeight*absRate}}</div>
+            <div>First Runnings Vol (gal): {{firstRunningsVol}}</div>
+        </div>
+    </div>
+    
+    <div>
+        <div>
+            
+        </div>
+        
+        <div>
+            
+            <div>Sparge Vol (gal): {{spargeVol}}</div>
+            <div>Estimated Preboil Gravity: {{estPreboilGrav}}</div>
+        </div>
+    </div>
+</mat-card>

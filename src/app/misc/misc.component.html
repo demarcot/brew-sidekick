@@ -1,0 +1,27 @@
+<mat-toolbar color="primary">
+    <span>Volume Measuring</span>
+</mat-toolbar>
+<mat-card>
+    
+    <div [formGroup]="miscFG">
+        <mat-form-field>
+            <mat-label>Current Weight (lbs):</mat-label>
+            <input matInput type="number" formControlName="currWeight">
+        </mat-form-field>
+        
+        <mat-form-field>
+            <mat-label>Empty Weight (lbs):</mat-label>
+            <input matInput type="number" formControlName="emptyWeight">
+        </mat-form-field>
+        
+        <mat-form-field>
+            <mat-label>Specific Gravity:</mat-label>
+            <input matInput type="number" step=".001" formControlName="specificGrav">
+        </mat-form-field>
+    </div>
+    
+    <div>
+        <div>Current Volume (gal):</div>
+        <div>{{currVol}}</div>
+    </div>
+</mat-card>
